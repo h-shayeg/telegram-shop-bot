@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from bot.db.models import Order, OrderItem, OrderStatus
 from bot.formatting import format_date, order_text, status_label
@@ -22,7 +22,7 @@ def make_order(status: OrderStatus) -> Order:
         phone="09121234567",
         address="Tehran",
         total_price=2000,
-        created_at=datetime(2026, 11, 4, 13, 30, tzinfo=timezone.utc),
+        created_at=datetime(2026, 11, 4, 13, 30, tzinfo=UTC),
     )
     order.items = [OrderItem(product_id=1, product_name="Mug", unit_price=1000, quantity=2)]
     return order
@@ -41,7 +41,7 @@ def test_finished_orders_cannot_change() -> None:
 
 
 def test_dates_use_shop_time_zone_and_calendar() -> None:
-    moment = datetime(2026, 11, 4, 13, 30, tzinfo=timezone.utc)  # 17:00 in Tehran
+    moment = datetime(2026, 11, 4, 13, 30, tzinfo=UTC)  # 17:00 in Tehran
     assert format_date(moment, "en") == "2026-11-04 17:00"
     assert format_date(moment, "fa") == persian("1405/08/13 17:00")
 

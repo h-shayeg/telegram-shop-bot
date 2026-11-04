@@ -1,4 +1,4 @@
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from zoneinfo import ZoneInfo
 
 from bot.charts import column_chart, nice_step
@@ -27,9 +27,9 @@ def order(created_utc: datetime, status: OrderStatus, items: list[tuple[str, int
 
 def test_report_counts_sales_and_skips_cancelled_orders() -> None:
     orders = [
-        order(datetime(2026, 11, 4, 8, 0, tzinfo=timezone.utc), OrderStatus.NEW, [("Mug", 2, 100)]),
-        order(datetime(2026, 11, 3, 8, 0, tzinfo=timezone.utc), OrderStatus.DELIVERED, [("Pen", 5, 10), ("Mug", 1, 100)]),
-        order(datetime(2026, 11, 2, 8, 0, tzinfo=timezone.utc), OrderStatus.CANCELLED, [("Mug", 9, 100)]),
+        order(datetime(2026, 11, 4, 8, 0, tzinfo=UTC), OrderStatus.NEW, [("Mug", 2, 100)]),
+        order(datetime(2026, 11, 3, 8, 0, tzinfo=UTC), OrderStatus.DELIVERED, [("Pen", 5, 10), ("Mug", 1, 100)]),
+        order(datetime(2026, 11, 2, 8, 0, tzinfo=UTC), OrderStatus.CANCELLED, [("Mug", 9, 100)]),
     ]
     report = build_report(orders, 7, TODAY, TEHRAN)
     assert report.order_count == 2
@@ -42,18 +42,18 @@ def test_report_counts_sales_and_skips_cancelled_orders() -> None:
 
 def test_days_follow_the_shop_time_zone() -> None:
     # 21:00 UTC on Nov 3 is already 00:30 on Nov 4 in Tehran
-    late = order(datetime(2026, 11, 3, 21, 0, tzinfo=timezone.utc), OrderStatus.NEW, [("Mug", 1, 100)])
+    late = order(datetime(2026, 11, 3, 21, 0, tzinfo=UTC), OrderStatus.NEW, [("Mug", 1, 100)])
     report = build_report([late], 7, TODAY, TEHRAN)
     assert dict(report.daily)[TODAY] == 100
 
 
 def test_orders_outside_the_period_are_ignored() -> None:
-    old = order(datetime(2026, 9, 1, 8, 0, tzinfo=timezone.utc), OrderStatus.NEW, [("Mug", 1, 100)])
+    old = order(datetime(2026, 9, 1, 8, 0, tzinfo=UTC), OrderStatus.NEW, [("Mug", 1, 100)])
     assert build_report([old], 7, TODAY, TEHRAN).order_count == 0
 
 
 def test_report_text_lists_best_sellers() -> None:
-    orders = [order(datetime(2026, 11, 4, 8, 0, tzinfo=timezone.utc), OrderStatus.NEW, [("Mug", 2, 1000)])]
+    orders = [order(datetime(2026, 11, 4, 8, 0, tzinfo=UTC), OrderStatus.NEW, [("Mug", 2, 1000)])]
     text = report_text(build_report(orders, 7, TODAY, TEHRAN), "en")
     assert "Orders: 1" in text and "2,000 Toman" in text and "1. Mug" in text
 

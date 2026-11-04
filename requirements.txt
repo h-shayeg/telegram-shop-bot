@@ -1,9 +1,9 @@
-aiogram
-aiohttp-socks
-python-dotenv
-sqlalchemy[asyncio]
-asyncpg
-alembic
-jdatetime
+aiogram>=3.13,<4
+aiohttp-socks>=0.8
+python-dotenv>=1.0
+sqlalchemy[asyncio]>=2.0,<3
+asyncpg>=0.29
+alembic>=1.13,<2
+jdatetime>=5.0
 tzdata
-pillow
+pillow>=10.1

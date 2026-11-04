@@ -70,7 +70,7 @@ def column_chart(labels: list[str], values: list[float]) -> bytes:
     bar_width = min(24 * s, slot * 0.6)
     label_every = max(1, ceil(len(labels) / 8))
     tallest = max(range(len(values)), key=lambda i: values[i]) if values else -1
-    for i, (label, value) in enumerate(zip(labels, values)):
+    for i, (label, value) in enumerate(zip(labels, values, strict=True)):
         center = left + slot * (i + 0.5)
         x0, x1 = center - bar_width / 2, center + bar_width / 2
         y = y_of(value)
