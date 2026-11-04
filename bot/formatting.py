@@ -7,11 +7,13 @@ _PERSIAN_DIGITS = str.maketrans(
 )
 
 
+def format_number(value: int, lang: str) -> str:
+    number = f"{value:,}"
+    return number.translate(_PERSIAN_DIGITS) if lang == "fa" else number
+
+
 def format_price(amount: int, lang: str) -> str:
-    number = f"{amount:,}"
-    if lang == "fa":
-        number = number.translate(_PERSIAN_DIGITS)
-    return t("price.format", lang, amount=number)
+    return t("price.format", lang, amount=format_number(amount, lang))
 
 
 def product_text(product: Product, lang: str) -> str:
@@ -21,3 +23,25 @@ def product_text(product: Product, lang: str) -> str:
     lines += ["", t("catalog.price", lang, price=format_price(product.price, lang))]
     lines.append(t("catalog.in_stock" if product.stock > 0 else "catalog.out_of_stock", lang))
     return "\n".join(lines)
+
+
+def admin_product_text(
+    *,
+    name: str,
+    category: str,
+    description: str | None,
+    price: int,
+    stock: int,
+    is_active: bool,
+    lang: str,
+) -> str:
+    return t(
+        "admin.product_details",
+        lang,
+        name=name,
+        category=category,
+        description=description or t("admin.no_description", lang),
+        price=format_price(price, lang),
+        stock=format_number(stock, lang),
+        status=t("admin.status_visible" if is_active else "admin.status_hidden", lang),
+    )

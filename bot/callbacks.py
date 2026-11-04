@@ -14,3 +14,9 @@ class CatalogCallback(CallbackData, prefix="cat"):
 class CartCallback(CallbackData, prefix="cart"):
     action: str
     product_id: int = 0
+
+
+class AdminCallback(CallbackData, prefix="adm"):
+    action: str
+    id: int = 0
+    field: str = ""

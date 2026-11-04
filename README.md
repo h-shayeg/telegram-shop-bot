@@ -19,7 +19,7 @@ Python 3.13, aiogram 3, PostgreSQL 16, SQLAlchemy 2 (async), Alembic, Docker Com
 
 ## Run locally
 
-1. Copy `.env.example` to `.env` and fill in the values: the bot token from @BotFather, and the same database password in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
+1. Copy `.env.example` to `.env` and fill in the values: the bot token from @BotFather, your Telegram user id in `ADMIN_IDS` (comma-separated for several admins), and the same database password in both `POSTGRES_PASSWORD` and `DATABASE_URL`.
 2. Start the database: `docker compose up -d --wait`
 3. Install dependencies: `python -m venv .venv && .venv/bin/pip install -r requirements.txt`
 4. Create the tables: `.venv/bin/alembic upgrade head`
