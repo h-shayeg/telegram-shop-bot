@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:16
     container_name: shopbot-db
+    restart: unless-stopped
     environment:
       POSTGRES_USER: shopbot
       POSTGRES_DB: shopbot
@@ -15,6 +16,27 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
+
+  # The bot itself, for running on a server. It starts only with:
+  #   docker compose --profile bot up -d --build
+  bot:
+    build: .
+    image: bazarche-bot
+    container_name: shopbot-bot
+    profiles: ["bot"]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # Inside Docker the bot reaches the database by its service name
+      DATABASE_URL: postgresql+asyncpg://shopbot:${POSTGRES_PASSWORD}@db:5432/shopbot
+    depends_on:
+      db:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   pgdata:

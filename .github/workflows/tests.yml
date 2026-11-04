@@ -42,3 +42,31 @@ jobs:
         run: alembic check
       - name: Run tests (unit and PostgreSQL)
         run: pytest -v
+
+  docker:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: shopbot
+          POSTGRES_PASSWORD: shopbot
+          POSTGRES_DB: shopbot
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U shopbot -d shopbot"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v6
+      - name: Build the bot image
+        run: docker build -t bazarche-bot .
+      - name: Create the database tables from inside the image
+        run: >-
+          docker run --rm --network host
+          -e DATABASE_URL=postgresql+asyncpg://shopbot:shopbot@localhost:5432/shopbot
+          bazarche-bot alembic upgrade head
+      - name: Check that the bot loads inside the image
+        run: docker run --rm bazarche-bot python -c "import bot.__main__"

@@ -9,6 +9,25 @@
 
 A complete online shop inside Telegram, built with Python and aiogram 3. Customers browse products, fill a cart and place orders; the shop owner manages products, orders and sales from an admin panel inside the bot. The interface is available in Persian and English.
 
+**Guides:** [User guide](docs/USER_GUIDE.md) · [Deploy on a server](docs/DEPLOY.md) · [Persian guide](docs/README.fa.md)
+
+## Screenshots
+
+<p align="center"><img src="docs/images/screenshots/main-menu.png" alt="Main menu with the reply keyboard" width="600"></p>
+
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%"><img src="docs/images/screenshots/categories.png" alt="Categories" width="390"><br><sub>Categories</sub></td>
+    <td align="center" valign="top" width="50%"><img src="docs/images/screenshots/product.png" alt="Product page with photo, price and stock" width="390"><br><sub>Product page</sub></td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="50%"><img src="docs/images/screenshots/cart.png" alt="Cart with quantity buttons" width="390"><br><sub>Cart</sub></td>
+    <td align="center" valign="top" width="50%"><img src="docs/images/screenshots/orders.png" alt="Order history with statuses" width="390"><br><sub>Order history</sub></td>
+  </tr>
+</table>
+
+*The Persian interface in Telegram Desktop.*
+
 ## Features
 
 ### For customers
@@ -43,7 +62,7 @@ A complete online shop inside Telegram, built with Python and aiogram 3. Custome
 
 ## Tech stack
 
-Python 3.13 · aiogram 3 · PostgreSQL 16 · SQLAlchemy 2 (async, asyncpg) · Alembic · Pillow · Docker Compose · pytest · Ruff · GitHub Actions
+Python 3.13 · aiogram 3 · PostgreSQL 16 · SQLAlchemy 2 (async, asyncpg) · Alembic · Pillow · Docker and Docker Compose · pytest · Ruff · GitHub Actions
 
 ## Project structure
 
@@ -58,6 +77,8 @@ bot/
 alembic/         Database migrations
 scripts/         Sample data loader and the README chart
 tests/           Unit tests and PostgreSQL tests
+docs/            User guide, deployment guide and Persian guide
+Dockerfile       Image for running the bot on a server
 ```
 
 ## Run locally
@@ -72,6 +93,16 @@ Requirements: Python 3.13, Docker, and a bot token from [@BotFather](https://t.m
 6. Start the bot: `.venv/bin/python -m bot`
 
 Send `/start` to the bot. Admins can also use `/admin`.
+
+## Deploy on a server
+
+To keep the shop online around the clock, run the bot and its database with Docker on a Linux server:
+
+```bash
+docker compose --profile bot up -d --build
+```
+
+The bot container creates or updates the database tables when it starts, restarts by itself after a crash or a reboot, and rotates its logs. The [deployment guide](docs/DEPLOY.md) walks through every step, from getting a server to backups.
 
 ## Configuration
 
@@ -95,11 +126,10 @@ Send `/start` to the bot. Admins can also use `/admin`.
 
 The PostgreSQL tests (placing orders, stock locking, cancellations, status rules and the sales report) run only when `TEST_DATABASE_URL` is set. They wipe that database before each test, so its name must end with `_test`. To create it in the Docker database: `docker compose exec db createdb -U shopbot shopbot_test`
 
-On every push, GitHub Actions runs the linter, applies the migrations to a fresh PostgreSQL, checks that the models match the migrations, and runs all tests.
+On every push, GitHub Actions runs the linter, applies the migrations to a fresh PostgreSQL, checks that the models match the migrations, runs all tests, and builds and checks the Docker image.
 
 ## Roadmap
 
-- Run the bot around the clock on a server with Docker
 - Broadcast messages from admins to all customers
 - Online payment
 

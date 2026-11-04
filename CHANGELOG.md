@@ -2,6 +2,15 @@
 
 All notable changes to this project are listed here.
 
+## [1.1.0] - 2026-11-04
+
+### Added
+
+- Dockerfile and a `bot` service in Docker Compose for running the shop on a server, with automatic database migrations, restarts and log rotation
+- Deployment guide, user guide and a Persian guide in `docs/`
+- Screenshots in the README
+- GitHub Actions now also builds the Docker image and checks it against PostgreSQL
+
 ## [1.0.0] - 2026-11-04
 
 First complete version of the shop bot.
@@ -27,4 +36,5 @@ First complete version of the shop bot.
 - 57 tests, including tests against a real PostgreSQL database
 - Linting, a migrations check and all tests run on GitHub Actions on every push
 
+[1.1.0]: https://github.com/h-shayeg/telegram-shop-bot/releases/tag/v1.1.0
 [1.0.0]: https://github.com/h-shayeg/telegram-shop-bot/releases/tag/v1.0.0
