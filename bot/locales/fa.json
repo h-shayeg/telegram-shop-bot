@@ -69,5 +69,19 @@
   "cart.cleared": "سبد خرید شما خالی شد.",
   "cart.checkout": "✅ ثبت سفارش",
   "cart.view": "🛒 مشاهدهٔ سبد خرید",
-  "cart.unavailable": "این محصول دیگر در دسترس نیست."
+  "cart.unavailable": "این محصول دیگر در دسترس نیست.",
+  "common.too_long": "متن خیلی طولانی است. حداکثر {limit} حرف بفرستید.",
+  "checkout.ask_name": "برای ثبت سفارش، لطفاً نام و نام خانوادگی خود را بفرستید:",
+  "checkout.ask_phone": "لطفاً شمارهٔ تلفن خود را بفرستید، یا دکمهٔ پایین را بزنید:",
+  "checkout.share_phone": "📱 ارسال شمارهٔ من",
+  "checkout.invalid_phone": "این شماره درست به نظر نمی‌رسد. لطفاً دوباره بفرستید، مثلاً ۰۹۱۲۱۲۳۴۵۶۷.",
+  "checkout.ask_address": "لطفاً نشانی کامل محل تحویل را بفرستید:",
+  "checkout.summary": "سفارش خود را بررسی کنید:\n\n{items}\n\n💰 جمع کل: {total}\n\n👤 {name}\n📱 {phone}\n📍 {address}\n\nسفارش ثبت شود؟",
+  "checkout.confirm": "✅ تأیید و ثبت سفارش",
+  "checkout.cancel_button": "❌ انصراف",
+  "checkout.cancelled": "ثبت سفارش لغو شد. سبد خرید شما سر جایش است.",
+  "checkout.cart_empty": "سبد خرید شما خالی است.",
+  "checkout.stock_problem": "متأسفانه این محصولات به تعدادی که انتخاب کرده‌اید موجود نیستند:\n{items}\n\nلطفاً سبد خرید را بررسی کنید و دوباره امتحان کنید.",
+  "checkout.placed": "✅ سفارش شمارهٔ {order_id} ثبت شد.\nهر وقت وضعیت سفارش تغییر کند، به شما خبر می‌دهیم.",
+  "admin.new_order": "🆕 سفارش جدید شمارهٔ {order_id}\n\n{items}\n\n💰 جمع کل: {total}\n\n👤 {name}\n📱 {phone}\n📍 {address}"
 }

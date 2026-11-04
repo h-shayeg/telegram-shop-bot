@@ -9,8 +9,9 @@ from aiogram.types import BotCommand, BotCommandScopeChat
 
 from bot.config import load_settings
 from bot.db.session import make_session_factory
-from bot.handlers import admin, cart, catalog, language, menu, start
+from bot.handlers import admin, cart, catalog, checkout, language, menu, start
 from bot.middlewares.db import DbSessionMiddleware
+from bot.middlewares.requests import IgnoreExpiredCallbackAnswers
 from bot.texts import t
 
 
@@ -46,13 +47,14 @@ async def main() -> None:
     session_factory = make_session_factory(settings.database_url)
 
     bot = Bot(token=settings.bot_token, session=AiohttpSession(proxy=settings.proxy_url))
+    bot.session.middleware(IgnoreExpiredCallbackAnswers())
     dp = Dispatcher(settings=settings)
 
     db_middleware = DbSessionMiddleware(session_factory)
     dp.message.middleware(db_middleware)
     dp.callback_query.middleware(db_middleware)
-    # The admin router goes first so an admin's form answers are not taken by other handlers
-    dp.include_routers(admin.router, start.router, language.router, catalog.router, cart.router, menu.router)
+    # Form routers (checkout, admin) go first so form answers are not taken by other handlers
+    dp.include_routers(checkout.router, admin.router, start.router, language.router, catalog.router, cart.router, menu.router)
 
     await set_commands(bot, settings.admin_ids)
     await dp.start_polling(bot)

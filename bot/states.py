@@ -15,3 +15,10 @@ class AddCategory(StatesGroup):
 
 class EditProduct(StatesGroup):
     value = State()
+
+
+class Checkout(StatesGroup):
+    name = State()
+    phone = State()
+    address = State()
+    confirm = State()

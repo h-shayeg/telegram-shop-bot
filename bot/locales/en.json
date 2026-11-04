@@ -69,5 +69,19 @@
   "cart.cleared": "Your cart is now empty.",
   "cart.checkout": "✅ Place order",
   "cart.view": "🛒 View cart",
-  "cart.unavailable": "This product is no longer available."
+  "cart.unavailable": "This product is no longer available.",
+  "common.too_long": "That is too long. Please send at most {limit} characters.",
+  "checkout.ask_name": "Let's place your order. Please send your full name:",
+  "checkout.ask_phone": "Please send your phone number, or tap the button below:",
+  "checkout.share_phone": "📱 Share my phone number",
+  "checkout.invalid_phone": "That doesn't look like a phone number. Please send it again, for example 09121234567.",
+  "checkout.ask_address": "Please send your full delivery address:",
+  "checkout.summary": "Please check your order:\n\n{items}\n\n💰 Total: {total}\n\n👤 {name}\n📱 {phone}\n📍 {address}\n\nPlace this order?",
+  "checkout.confirm": "✅ Confirm and place order",
+  "checkout.cancel_button": "❌ Cancel",
+  "checkout.cancelled": "Checkout cancelled. Your cart is still saved.",
+  "checkout.cart_empty": "Your cart is empty.",
+  "checkout.stock_problem": "Sorry, these items are no longer available in the amount you chose:\n{items}\n\nPlease check your cart and try again.",
+  "checkout.placed": "✅ Your order #{order_id} has been placed.\nWe will message you whenever its status changes.",
+  "admin.new_order": "🆕 New order #{order_id}\n\n{items}\n\n💰 Total: {total}\n\n👤 {name}\n📱 {phone}\n📍 {address}"
 }

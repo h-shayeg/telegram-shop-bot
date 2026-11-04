@@ -5,12 +5,18 @@ from bot.texts import t
 
 # Western digits and comma -> Persian digits (U+06F0..U+06F9) and Persian thousands separator (U+066C)
 _PERSIAN_DIGITS = str.maketrans(
-    "0123456789,", "".join(chr(0x06F0 + i) for i in range(10)) + "\u066c"
+    "0123456789,", "".join(chr(0x06F0 + i) for i in range(10)) + chr(0x066C)
 )
 
 
 def format_number(value: int, lang: str) -> str:
     number = f"{value:,}"
+    return number.translate(_PERSIAN_DIGITS) if lang == "fa" else number
+
+
+def format_id(value: int, lang: str) -> str:
+    """An id such as an order number: no thousands separators."""
+    number = str(value)
     return number.translate(_PERSIAN_DIGITS) if lang == "fa" else number
 
 
@@ -27,26 +33,38 @@ def product_text(product: Product, lang: str) -> str:
     return "\n".join(lines)
 
 
+def order_lines_text(lines: Sequence[tuple[str, int, int]], lang: str) -> str:
+    """lines: (product name, quantity, unit price) for each row."""
+    return "\n".join(
+        t(
+            "cart.line",
+            lang,
+            name=name,
+            quantity=format_number(quantity, lang),
+            price=format_price(price, lang),
+            subtotal=format_price(quantity * price, lang),
+        )
+        for name, quantity, price in lines
+    )
+
+
+def cart_lines(items: Sequence[CartItem]) -> list[tuple[str, int, int]]:
+    return [(item.product.name, item.quantity, item.product.price) for item in items]
+
+
 def cart_text(items: Sequence[CartItem], lang: str) -> str:
     if not items:
         return t("cart.empty", lang)
-    lines = [t("cart.title", lang), ""]
-    total = 0
-    for item in items:
-        subtotal = item.quantity * item.product.price
-        total += subtotal
-        lines.append(
-            t(
-                "cart.line",
-                lang,
-                name=item.product.name,
-                quantity=format_number(item.quantity, lang),
-                price=format_price(item.product.price, lang),
-                subtotal=format_price(subtotal, lang),
-            )
-        )
-    lines += ["", t("cart.total", lang, total=format_price(total, lang))]
-    return "\n".join(lines)
+    total = sum(quantity * price for _, quantity, price in cart_lines(items))
+    return "\n".join(
+        [
+            t("cart.title", lang),
+            "",
+            order_lines_text(cart_lines(items), lang),
+            "",
+            t("cart.total", lang, total=format_price(total, lang)),
+        ]
+    )
 
 
 def admin_product_text(

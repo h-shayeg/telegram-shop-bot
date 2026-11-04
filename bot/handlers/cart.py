@@ -88,13 +88,8 @@ async def clear_items(callback: CallbackQuery, session: AsyncSession, user: User
     await _show_cart(callback, session, user, lang)
 
 
-@router.callback_query(CartCallback.filter(F.action == "checkout"))
-async def checkout_placeholder(callback: CallbackQuery, lang: str) -> None:
-    # Checkout is built in the next step
-    await callback.answer(t("common.coming_soon", lang), show_alert=True)
-
-
 @router.callback_query(CartCallback.filter())
 async def other_cart_button(callback: CallbackQuery) -> None:
     # The product-name button in the cart only shows information
+    # ("Place order" is handled earlier, by the checkout router)
     await callback.answer()

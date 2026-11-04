@@ -20,3 +20,8 @@ class AdminCallback(CallbackData, prefix="adm"):
     action: str
     id: int = 0
     field: str = ""
+
+
+class CheckoutCallback(CallbackData, prefix="co"):
+    # action: "confirm" or "cancel"
+    action: str
