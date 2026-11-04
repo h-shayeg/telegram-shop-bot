@@ -25,3 +25,16 @@ class AdminCallback(CallbackData, prefix="adm"):
 class CheckoutCallback(CallbackData, prefix="co"):
     # action: "confirm" or "cancel"
     action: str
+
+
+class OrderCallback(CallbackData, prefix="ord"):
+    # Customer side. action: "list", "view" or "cancel"
+    action: str
+    id: int = 0
+
+
+class AdminOrderCallback(CallbackData, prefix="ao"):
+    # Admin side. action: "list", "view" or "set" (status is the new status for "set")
+    action: str
+    id: int = 0
+    status: str = ""

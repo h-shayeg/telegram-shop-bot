@@ -4,3 +4,5 @@ python-dotenv
 sqlalchemy[asyncio]
 asyncpg
 alembic
+jdatetime
+tzdata

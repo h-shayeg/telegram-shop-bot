@@ -13,6 +13,7 @@ from bot.config import Settings
 from bot.db.models import User
 from bot.formatting import cart_lines, format_id, format_price, order_lines_text
 from bot.keyboards import main_menu
+from bot.order_keyboards import admin_open_order_keyboard
 from bot.parsing import normalize_phone
 from bot.services.cart import cart_total, get_cart
 from bot.services.orders import EmptyCartError, PlacedOrder, StockError, place_order
@@ -146,7 +147,9 @@ async def _notify_admins(bot: Bot, session: AsyncSession, settings: Settings, pl
         )
         # An admin who never started the bot cannot receive messages; skip them
         with suppress(TelegramAPIError):
-            await bot.send_message(admin_id, text)
+            await bot.send_message(
+                admin_id, text, reply_markup=admin_open_order_keyboard(placed.order_id, admin_lang)
+            )
 
 
 @router.callback_query(Checkout.confirm, CheckoutCallback.filter(F.action == "confirm"))

@@ -1,12 +1,19 @@
+import os
 from collections.abc import Sequence
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
-from bot.db.models import CartItem, Product
+import jdatetime
+
+from bot.db.models import CartItem, Order, OrderStatus, Product
 from bot.texts import t
 
 # Western digits and comma -> Persian digits (U+06F0..U+06F9) and Persian thousands separator (U+066C)
 _PERSIAN_DIGITS = str.maketrans(
     "0123456789,", "".join(chr(0x06F0 + i) for i in range(10)) + chr(0x066C)
 )
+# Dates are shown in the shop's time zone (TIMEZONE in .env)
+_TIMEZONE = ZoneInfo(os.getenv("TIMEZONE") or "Asia/Tehran")
 
 
 def format_number(value: int, lang: str) -> str:
@@ -22,6 +29,19 @@ def format_id(value: int, lang: str) -> str:
 
 def format_price(amount: int, lang: str) -> str:
     return t("price.format", lang, amount=format_number(amount, lang))
+
+
+def format_date(moment: datetime, lang: str, with_time: bool = True) -> str:
+    """Persian (Jalali) calendar and digits in Persian, Gregorian in English."""
+    local = moment.astimezone(_TIMEZONE)
+    pattern = "%Y/%m/%d %H:%M" if with_time else "%Y/%m/%d"
+    if lang == "fa":
+        return jdatetime.datetime.fromgregorian(datetime=local).strftime(pattern).translate(_PERSIAN_DIGITS)
+    return local.strftime(pattern.replace("/", "-"))
+
+
+def status_label(status: OrderStatus, lang: str) -> str:
+    return t(f"status.{status.value}", lang)
 
 
 def product_text(product: Product, lang: str) -> str:
@@ -64,6 +84,22 @@ def cart_text(items: Sequence[CartItem], lang: str) -> str:
             "",
             t("cart.total", lang, total=format_price(total, lang)),
         ]
+    )
+
+
+def order_text(order: Order, lang: str) -> str:
+    lines = [(item.product_name, item.quantity, item.unit_price) for item in order.items]
+    return t(
+        "orders.details",
+        lang,
+        order_id=format_id(order.id, lang),
+        date=format_date(order.created_at, lang),
+        status=status_label(order.status, lang),
+        items=order_lines_text(lines, lang),
+        total=format_price(order.total_price, lang),
+        name=order.customer_name,
+        phone=order.phone,
+        address=order.address,
     )
 
 
