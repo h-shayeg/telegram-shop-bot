@@ -41,8 +41,12 @@ def test_is_admin_filter() -> None:
 def test_admin_product_keyboard_toggle_label() -> None:
     visible = Product(id=1, category_id=1, name="X", price=1, stock=1, is_active=True)
     hidden = Product(id=1, category_id=1, name="X", price=1, stock=1, is_active=False)
-    assert admin_product_keyboard(visible, "en").inline_keyboard[2][0].text == "🚫 Hide"
-    assert admin_product_keyboard(hidden, "en").inline_keyboard[2][0].text == "👁 Show"
+    def toggle_text(product: Product) -> str:
+        buttons = [b for row in admin_product_keyboard(product, "en").inline_keyboard for b in row]
+        return next(b.text for b in buttons if b.callback_data.startswith("adm:toggle:"))
+
+    assert toggle_text(visible) == "🚫 Hide"
+    assert toggle_text(hidden) == "👁 Show"
 
 
 def test_admin_callback_data_fits_telegram_limit() -> None:

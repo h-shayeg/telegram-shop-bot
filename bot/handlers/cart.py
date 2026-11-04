@@ -1,7 +1,4 @@
-from contextlib import suppress
-
 from aiogram import F, Router
-from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import CallbackQuery, Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -12,18 +9,14 @@ from bot.keyboards import cart_keyboard
 from bot.services.cart import add_to_cart, change_quantity, clear_cart, get_cart
 from bot.services.catalog import get_product
 from bot.texts import t, variants
+from bot.ui import show_screen
 
 router = Router(name="cart")
 
 
 async def _show_cart(callback: CallbackQuery, session: AsyncSession, user: User, lang: str) -> None:
     items = await get_cart(session, user.id)
-    if isinstance(callback.message, Message):
-        # Ignore "message is not modified" when nothing changed
-        with suppress(TelegramBadRequest):
-            await callback.message.edit_text(
-                cart_text(items, lang), reply_markup=cart_keyboard(items, lang)
-            )
+    await show_screen(callback, cart_text(items, lang), cart_keyboard(items, lang))
 
 
 @router.message(F.text.in_(variants("menu.cart")))

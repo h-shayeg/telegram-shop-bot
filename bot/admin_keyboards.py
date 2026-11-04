@@ -8,7 +8,7 @@ from bot.db.models import Category, Product
 from bot.formatting import format_price
 from bot.texts import t
 
-EDITABLE_FIELDS = ("name", "description", "price", "stock")
+EDITABLE_FIELDS = ("name", "description", "price", "stock", "photo")
 
 
 def admin_menu_keyboard(lang: str) -> InlineKeyboardMarkup:
@@ -61,7 +61,7 @@ def admin_product_keyboard(product: Product, lang: str) -> InlineKeyboardMarkup:
         text=t("button.back", lang),
         callback_data=AdminCallback(action="category", id=product.category_id),
     )
-    builder.adjust(2, 2, 1, 1)
+    builder.adjust(2, 2, 2, 1)
     return builder.as_markup()
 
 

@@ -104,5 +104,11 @@
   "admin.set_status": "تغییر به: {status}",
   "admin.status_updated": "✅ وضعیت به‌روز شد.",
   "admin.invalid_transition": "این تغییر برای وضعیت فعلی سفارش مجاز نیست.",
-  "admin.order_cancelled_by_customer": "❌ مشتری سفارش شمارهٔ {order_id} را لغو کرد."
+  "admin.order_cancelled_by_customer": "❌ مشتری سفارش شمارهٔ {order_id} را لغو کرد.",
+  "admin.edit_photo": "🖼 عکس",
+  "admin.ask_photo": "یک عکس از محصول بفرستید، یا /skip:",
+  "admin.ask_new_photo": "عکس جدید را بفرستید، یا /skip برای حذف عکس:",
+  "admin.need_photo": "لطفاً یک عکس بفرستید (نه فایل یا متن)، یا /skip.",
+  "admin.has_photo": "🖼 عکس دارد",
+  "admin.no_photo": "🖼 هنوز عکس ندارد"
 }

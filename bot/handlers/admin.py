@@ -65,6 +65,7 @@ async def _product_view(session: AsyncSession, product: Product, lang: str) -> t
         is_active=product.is_active,
         lang=lang,
     )
+    text += "\n" + t("admin.has_photo" if product.photo_file_id else "admin.no_photo", lang)
     return text, admin_product_keyboard(product, lang)
 
 
@@ -208,6 +209,11 @@ async def add_product_stock(message: Message, state: FSMContext, lang: str) -> N
         await message.answer(t("admin.invalid_number", lang))
         return
     await state.update_data(stock=stock)
+    await state.set_state(AddProduct.photo)
+    await message.answer(t("admin.ask_photo", lang))
+
+
+async def _ask_confirmation(message: Message, state: FSMContext, lang: str) -> None:
     await state.set_state(AddProduct.confirm)
     data: dict[str, Any] = await state.get_data()
     details = admin_product_text(
@@ -215,13 +221,32 @@ async def add_product_stock(message: Message, state: FSMContext, lang: str) -> N
         category=data["category_name"],
         description=data.get("description"),
         price=data["price"],
-        stock=stock,
+        stock=data["stock"],
         is_active=True,
         lang=lang,
     )
+    details += "\n" + t("admin.has_photo" if data.get("photo") else "admin.no_photo", lang)
     await message.answer(
         t("admin.confirm_product", lang, details=details), reply_markup=confirm_keyboard(lang)
     )
+
+
+@router.message(AddProduct.photo, F.photo)
+async def add_product_photo(message: Message, state: FSMContext, lang: str) -> None:
+    # Telegram sends several sizes; the last one is the largest
+    await state.update_data(photo=message.photo[-1].file_id if message.photo else None)
+    await _ask_confirmation(message, state, lang)
+
+
+@router.message(AddProduct.photo, Command("skip"))
+async def add_product_skip_photo(message: Message, state: FSMContext, lang: str) -> None:
+    await state.update_data(photo=None)
+    await _ask_confirmation(message, state, lang)
+
+
+@router.message(AddProduct.photo, ~F.text.in_(MENU_TEXTS))
+async def add_product_photo_missing(message: Message, lang: str) -> None:
+    await message.answer(t("admin.need_photo", lang))
 
 
 @router.callback_query(AddProduct.confirm, AdminCallback.filter(F.action == "save"))
@@ -235,6 +260,7 @@ async def add_product_save(
         description=data.get("description"),
         price=data["price"],
         stock=data["stock"],
+        photo_file_id=data.get("photo"),
     )
     session.add(product)
     await session.commit()
@@ -312,8 +338,8 @@ async def edit_start(
     await callback.answer()
     await state.set_state(EditProduct.value)
     await state.update_data(product_id=callback_data.id, field=callback_data.field)
-    key = "admin.ask_new_description" if callback_data.field == "description" else "admin.ask_new_value"
-    await _send(callback, t(key, lang))
+    prompts = {"description": "admin.ask_new_description", "photo": "admin.ask_new_photo"}
+    await _send(callback, t(prompts.get(callback_data.field, "admin.ask_new_value"), lang))
 
 
 async def _save_edit(
@@ -325,7 +351,8 @@ async def _save_edit(
     if product is None:
         await message.answer(t("admin.not_found", lang))
         return
-    setattr(product, data["field"], value)
+    column = "photo_file_id" if data["field"] == "photo" else data["field"]
+    setattr(product, column, value)
     await session.commit()
     text, markup = await _product_view(session, product, lang)
     await message.answer(t("admin.updated", lang))
@@ -335,8 +362,17 @@ async def _save_edit(
 @router.message(EditProduct.value, Command("skip"))
 async def edit_skip(message: Message, state: FSMContext, session: AsyncSession, lang: str) -> None:
     data = await state.get_data()
-    if data.get("field") == "description":
+    if data.get("field") in ("description", "photo"):
         await _save_edit(message, state, session, lang, None)
+    else:
+        await message.answer(t("admin.ask_new_value", lang))
+
+
+@router.message(EditProduct.value, F.photo)
+async def edit_photo(message: Message, state: FSMContext, session: AsyncSession, lang: str) -> None:
+    data = await state.get_data()
+    if data.get("field") == "photo" and message.photo:
+        await _save_edit(message, state, session, lang, message.photo[-1].file_id)
     else:
         await message.answer(t("admin.ask_new_value", lang))
 
@@ -347,6 +383,9 @@ async def edit_value(message: Message, state: FSMContext, session: AsyncSession,
     field = data.get("field")
     text = (message.text or "").strip()
     value: object
+    if field == "photo":
+        await message.answer(t("admin.need_photo", lang))
+        return
     if field in ("price", "stock"):
         value = parse_int(text)
         if value is None:

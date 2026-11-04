@@ -6,6 +6,7 @@ class AddProduct(StatesGroup):
     description = State()
     price = State()
     stock = State()
+    photo = State()
     confirm = State()
 
 

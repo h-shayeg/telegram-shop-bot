@@ -104,5 +104,11 @@
   "admin.set_status": "Set to: {status}",
   "admin.status_updated": "✅ Status updated.",
   "admin.invalid_transition": "This change is not allowed for the order's current status.",
-  "admin.order_cancelled_by_customer": "❌ The customer cancelled order #{order_id}."
+  "admin.order_cancelled_by_customer": "❌ The customer cancelled order #{order_id}.",
+  "admin.edit_photo": "🖼 Photo",
+  "admin.ask_photo": "Send a product photo, or /skip:",
+  "admin.ask_new_photo": "Send the new photo, or /skip to remove the photo:",
+  "admin.need_photo": "Please send a photo (not a file or text), or /skip.",
+  "admin.has_photo": "🖼 Has a photo",
+  "admin.no_photo": "🖼 No photo yet"
 }
