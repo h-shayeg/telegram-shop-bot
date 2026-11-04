@@ -58,5 +58,16 @@
   "admin.ask_new_value": "مقدار جدید را بفرستید (یا /cancel):",
   "admin.ask_new_description": "توضیح جدید را بفرستید، یا /skip برای حذف توضیح:",
   "admin.updated": "✅ به‌روزرسانی شد.",
-  "admin.not_found": "این مورد پیدا نشد."
+  "admin.not_found": "این مورد پیدا نشد.",
+  "cart.added": "✅ به سبد خرید اضافه شد (الان {quantity} عدد در سبد).",
+  "cart.not_enough_stock": "متأسفانه فقط {stock} عدد موجود است.",
+  "cart.empty": "🛒 سبد خرید شما خالی است.",
+  "cart.title": "🛒 سبد خرید شما:",
+  "cart.line": "{name}\n   {quantity} × {price} = {subtotal}",
+  "cart.total": "💰 جمع کل: {total}",
+  "cart.clear": "🗑 خالی کردن سبد",
+  "cart.cleared": "سبد خرید شما خالی شد.",
+  "cart.checkout": "✅ ثبت سفارش",
+  "cart.view": "🛒 مشاهدهٔ سبد خرید",
+  "cart.unavailable": "این محصول دیگر در دسترس نیست."
 }

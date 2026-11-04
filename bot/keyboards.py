@@ -4,8 +4,8 @@ from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
 from bot.callbacks import CartCallback, CatalogCallback, LanguageCallback
-from bot.db.models import Category, Product
-from bot.formatting import format_price
+from bot.db.models import CartItem, Category, Product
+from bot.formatting import format_number, format_price
 from bot.texts import SUPPORTED_LANGUAGES, t
 
 
@@ -54,9 +54,30 @@ def product_keyboard(product: Product, lang: str) -> InlineKeyboardMarkup:
             text=t("button.add_to_cart", lang),
             callback_data=CartCallback(action="add", product_id=product.id),
         )
+    builder.button(text=t("cart.view", lang), callback_data=CartCallback(action="view"))
     builder.button(
         text=t("button.back", lang),
         callback_data=CatalogCallback(action="category", id=product.category_id),
     )
     builder.adjust(1)
+    return builder.as_markup()
+
+
+def cart_keyboard(items: Sequence[CartItem], lang: str) -> InlineKeyboardMarkup | None:
+    if not items:
+        return None
+    builder = InlineKeyboardBuilder()
+    sizes: list[int] = []
+    for item in items:
+        builder.button(text="➖", callback_data=CartCallback(action="dec", product_id=item.product_id))
+        builder.button(
+            text=f"{item.product.name} ({format_number(item.quantity, lang)})",
+            callback_data=CartCallback(action="noop"),
+        )
+        builder.button(text="➕", callback_data=CartCallback(action="inc", product_id=item.product_id))
+        sizes.append(3)
+    builder.button(text=t("cart.clear", lang), callback_data=CartCallback(action="clear"))
+    builder.button(text=t("cart.checkout", lang), callback_data=CartCallback(action="checkout"))
+    sizes += [1, 1]
+    builder.adjust(*sizes)
     return builder.as_markup()

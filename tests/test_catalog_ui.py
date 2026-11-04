@@ -34,8 +34,8 @@ def test_product_text_without_description() -> None:
 
 def test_out_of_stock_product_has_no_add_button() -> None:
     markup = product_keyboard(make_product(stock=0), "en")
-    texts = [button.text for row in markup.inline_keyboard for button in row]
-    assert texts == ["🔙 Back"]
+    data = [button.callback_data for row in markup.inline_keyboard for button in row]
+    assert "cart:add:7" not in data
 
 
 def test_in_stock_product_has_add_button() -> None:

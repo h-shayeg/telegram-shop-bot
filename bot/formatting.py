@@ -1,4 +1,6 @@
-from bot.db.models import Product
+from collections.abc import Sequence
+
+from bot.db.models import CartItem, Product
 from bot.texts import t
 
 # Western digits and comma -> Persian digits (U+06F0..U+06F9) and Persian thousands separator (U+066C)
@@ -22,6 +24,28 @@ def product_text(product: Product, lang: str) -> str:
         lines += ["", product.description]
     lines += ["", t("catalog.price", lang, price=format_price(product.price, lang))]
     lines.append(t("catalog.in_stock" if product.stock > 0 else "catalog.out_of_stock", lang))
+    return "\n".join(lines)
+
+
+def cart_text(items: Sequence[CartItem], lang: str) -> str:
+    if not items:
+        return t("cart.empty", lang)
+    lines = [t("cart.title", lang), ""]
+    total = 0
+    for item in items:
+        subtotal = item.quantity * item.product.price
+        total += subtotal
+        lines.append(
+            t(
+                "cart.line",
+                lang,
+                name=item.product.name,
+                quantity=format_number(item.quantity, lang),
+                price=format_price(item.product.price, lang),
+                subtotal=format_price(subtotal, lang),
+            )
+        )
+    lines += ["", t("cart.total", lang, total=format_price(total, lang))]
     return "\n".join(lines)
 
 

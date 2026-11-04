@@ -58,5 +58,16 @@
   "admin.ask_new_value": "Send the new value (or /cancel):",
   "admin.ask_new_description": "Send the new description, or /skip to remove it:",
   "admin.updated": "✅ Updated.",
-  "admin.not_found": "This item was not found."
+  "admin.not_found": "This item was not found.",
+  "cart.added": "✅ Added to your cart (now {quantity} in cart).",
+  "cart.not_enough_stock": "Sorry, only {stock} in stock.",
+  "cart.empty": "🛒 Your cart is empty.",
+  "cart.title": "🛒 Your cart:",
+  "cart.line": "{name}\n   {quantity} × {price} = {subtotal}",
+  "cart.total": "💰 Total: {total}",
+  "cart.clear": "🗑 Empty cart",
+  "cart.cleared": "Your cart is now empty.",
+  "cart.checkout": "✅ Place order",
+  "cart.view": "🛒 View cart",
+  "cart.unavailable": "This product is no longer available."
 }

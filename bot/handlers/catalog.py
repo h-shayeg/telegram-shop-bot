@@ -5,7 +5,7 @@ from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, Message
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot.callbacks import CartCallback, CatalogCallback
+from bot.callbacks import CatalogCallback
 from bot.formatting import product_text
 from bot.keyboards import categories_keyboard, product_keyboard, products_keyboard
 from bot.services.catalog import get_category, get_product, list_categories, list_products
@@ -77,9 +77,3 @@ async def show_product(
         return
     await callback.answer()
     await _edit(callback, product_text(product, lang), product_keyboard(product, lang))
-
-
-@router.callback_query(CartCallback.filter(F.action == "add"))
-async def add_to_cart_placeholder(callback: CallbackQuery, lang: str) -> None:
-    # The cart is built in the next step
-    await callback.answer(t("common.coming_soon", lang), show_alert=True)
