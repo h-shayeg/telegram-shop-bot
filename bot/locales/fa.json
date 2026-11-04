@@ -1,0 +1,13 @@
+{
+  "language.name": "فارسی",
+  "start.welcome": "سلام {name}! به بازارچه خوش آمدید.\nاز منوی پایین می‌توانید محصولات را ببینید، سبد خرید را بررسی کنید یا سفارش‌هایتان را پیگیری کنید.",
+  "menu.products": "🛍 محصولات",
+  "menu.cart": "🛒 سبد خرید",
+  "menu.orders": "📦 سفارش‌های من",
+  "menu.language": "🌐 زبان",
+  "language.choose": "زبان خود را انتخاب کنید:",
+  "language.changed": "زبان به فارسی تغییر کرد.",
+  "common.coming_soon": "این بخش به‌زودی اضافه می‌شود.",
+  "commands.start": "شروع و منوی اصلی",
+  "commands.language": "تغییر زبان"
+}

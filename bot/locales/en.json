@@ -1,0 +1,13 @@
+{
+  "language.name": "English",
+  "start.welcome": "Hi {name}! Welcome to Bazarche.\nUse the menu below to browse products, check your cart or track your orders.",
+  "menu.products": "🛍 Products",
+  "menu.cart": "🛒 Cart",
+  "menu.orders": "📦 My orders",
+  "menu.language": "🌐 Language",
+  "language.choose": "Choose your language:",
+  "language.changed": "Language changed to English.",
+  "common.coming_soon": "This section is coming soon.",
+  "commands.start": "Start and main menu",
+  "commands.language": "Change language"
+}
