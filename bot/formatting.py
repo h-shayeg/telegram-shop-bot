@@ -13,7 +13,7 @@ _PERSIAN_DIGITS = str.maketrans(
     "0123456789,", "".join(chr(0x06F0 + i) for i in range(10)) + chr(0x066C)
 )
 # Dates are shown in the shop's time zone (TIMEZONE in .env)
-_TIMEZONE = ZoneInfo(os.getenv("TIMEZONE") or "Asia/Tehran")
+SHOP_TIMEZONE = ZoneInfo(os.getenv("TIMEZONE") or "Asia/Tehran")
 
 
 def format_number(value: int, lang: str) -> str:
@@ -33,7 +33,7 @@ def format_price(amount: int, lang: str) -> str:
 
 def format_date(moment: datetime, lang: str, with_time: bool = True) -> str:
     """Persian (Jalali) calendar and digits in Persian, Gregorian in English."""
-    local = moment.astimezone(_TIMEZONE)
+    local = moment.astimezone(SHOP_TIMEZONE)
     pattern = "%Y/%m/%d %H:%M" if with_time else "%Y/%m/%d"
     if lang == "fa":
         return jdatetime.datetime.fromgregorian(datetime=local).strftime(pattern).translate(_PERSIAN_DIGITS)

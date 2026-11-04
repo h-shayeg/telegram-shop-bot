@@ -9,7 +9,7 @@ from aiogram.types import BotCommand, BotCommandScopeChat
 
 from bot.config import load_settings
 from bot.db.session import make_session_factory
-from bot.handlers import admin, admin_orders, cart, catalog, checkout, language, orders, start
+from bot.handlers import admin, admin_orders, admin_reports, cart, catalog, checkout, language, orders, start
 from bot.middlewares.db import DbSessionMiddleware
 from bot.middlewares.requests import IgnoreExpiredCallbackAnswers
 from bot.texts import t
@@ -58,6 +58,7 @@ async def main() -> None:
         checkout.router,
         admin.router,
         admin_orders.router,
+        admin_reports.router,
         start.router,
         language.router,
         catalog.router,

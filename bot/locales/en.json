@@ -110,5 +110,13 @@
   "admin.ask_new_photo": "Send the new photo, or /skip to remove the photo:",
   "admin.need_photo": "Please send a photo (not a file or text), or /skip.",
   "admin.has_photo": "🖼 Has a photo",
-  "admin.no_photo": "🖼 No photo yet"
+  "admin.no_photo": "🖼 No photo yet",
+  "admin.report": "📊 Sales report",
+  "admin.report_choose": "Choose a period for the sales report:",
+  "admin.report_7": "Last 7 days",
+  "admin.report_30": "Last 30 days",
+  "admin.report_text": "📊 Sales in the last {days} days (cancelled orders not counted)\n\n🧾 Orders: {orders}\n💰 Revenue: {revenue}\n📈 Average order: {average}\n❌ Cancelled orders: {cancelled}\n\n🏆 Best sellers:\n{top}",
+  "admin.report_top_line": "{rank}. {name}: {quantity} sold, {revenue}",
+  "admin.report_no_sales": "No sales yet.",
+  "admin.report_chart_caption": "📊 Daily sales in the last {days} days (thousand toman)"
 }

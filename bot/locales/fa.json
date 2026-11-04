@@ -110,5 +110,13 @@
   "admin.ask_new_photo": "عکس جدید را بفرستید، یا /skip برای حذف عکس:",
   "admin.need_photo": "لطفاً یک عکس بفرستید (نه فایل یا متن)، یا /skip.",
   "admin.has_photo": "🖼 عکس دارد",
-  "admin.no_photo": "🖼 هنوز عکس ندارد"
+  "admin.no_photo": "🖼 هنوز عکس ندارد",
+  "admin.report": "📊 گزارش فروش",
+  "admin.report_choose": "بازهٔ زمانی گزارش فروش را انتخاب کنید:",
+  "admin.report_7": "۷ روز اخیر",
+  "admin.report_30": "۳۰ روز اخیر",
+  "admin.report_text": "📊 فروش در {days} روز اخیر (بدون سفارش‌های لغوشده)\n\n🧾 تعداد سفارش: {orders}\n💰 مبلغ فروش: {revenue}\n📈 میانگین هر سفارش: {average}\n❌ سفارش‌های لغوشده: {cancelled}\n\n🏆 پرفروش‌ترین‌ها:\n{top}",
+  "admin.report_top_line": "{rank}. {name}: {quantity} عدد، {revenue}",
+  "admin.report_no_sales": "هنوز فروشی نداشته‌اید.",
+  "admin.report_chart_caption": "📊 فروش روزانه در {days} روز اخیر (هزار تومان)"
 }

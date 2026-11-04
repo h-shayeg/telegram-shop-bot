@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from bot.callbacks import AdminCallback, AdminOrderCallback
+from bot.callbacks import AdminCallback, AdminOrderCallback, ReportCallback
 from bot.db.models import Category, Product
 from bot.formatting import format_price
 from bot.texts import t
@@ -14,6 +14,7 @@ EDITABLE_FIELDS = ("name", "description", "price", "stock", "photo")
 def admin_menu_keyboard(lang: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     builder.button(text=t("admin.orders", lang), callback_data=AdminOrderCallback(action="list"))
+    builder.button(text=t("admin.report", lang), callback_data=ReportCallback(days=0))
     builder.button(text=t("admin.add_product", lang), callback_data=AdminCallback(action="add_product"))
     builder.button(text=t("admin.products", lang), callback_data=AdminCallback(action="products"))
     builder.button(text=t("admin.add_category", lang), callback_data=AdminCallback(action="add_category"))

@@ -38,3 +38,8 @@ class AdminOrderCallback(CallbackData, prefix="ao"):
     action: str
     id: int = 0
     status: str = ""
+
+
+class ReportCallback(CallbackData, prefix="rep"):
+    # days: 0 opens the period menu, otherwise the report for that many days
+    days: int = 0
