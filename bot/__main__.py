@@ -7,7 +7,7 @@ from aiogram.types import BotCommand
 
 from bot.config import load_settings
 from bot.db.session import make_session_factory
-from bot.handlers import language, menu, start
+from bot.handlers import catalog, language, menu, start
 from bot.middlewares.db import DbSessionMiddleware
 from bot.texts import t
 
@@ -30,7 +30,7 @@ async def main() -> None:
     db_middleware = DbSessionMiddleware(session_factory)
     dp.message.middleware(db_middleware)
     dp.callback_query.middleware(db_middleware)
-    dp.include_routers(start.router, language.router, menu.router)
+    dp.include_routers(start.router, language.router, catalog.router, menu.router)
 
     # Command list shown in the Telegram menu: Persian for Persian apps, English for the rest
     await bot.set_my_commands(bot_commands("en"))

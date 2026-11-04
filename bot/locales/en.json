@@ -9,5 +9,16 @@
   "language.changed": "Language changed to English.",
   "common.coming_soon": "This section is coming soon.",
   "commands.start": "Start and main menu",
-  "commands.language": "Change language"
+  "commands.language": "Change language",
+  "catalog.choose_category": "Choose a category:",
+  "catalog.empty": "There are no products yet.",
+  "catalog.choose_product": "{category}\nChoose a product:",
+  "catalog.empty_category": "This category has no products right now.",
+  "catalog.not_found": "This product is no longer available.",
+  "catalog.price": "💰 Price: {price}",
+  "catalog.in_stock": "✅ In stock",
+  "catalog.out_of_stock": "❌ Out of stock",
+  "price.format": "{amount} Toman",
+  "button.back": "🔙 Back",
+  "button.add_to_cart": "➕ Add to cart"
 }

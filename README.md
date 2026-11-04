@@ -23,7 +23,8 @@ Python 3.13, aiogram 3, PostgreSQL 16, SQLAlchemy 2 (async), Alembic, Docker Com
 2. Start the database: `docker compose up -d --wait`
 3. Install dependencies: `python -m venv .venv && .venv/bin/pip install -r requirements.txt`
 4. Create the tables: `.venv/bin/alembic upgrade head`
-5. Start the bot: `.venv/bin/python -m bot`
+5. Load sample products (optional): `.venv/bin/python -m scripts.seed_sample_data`
+6. Start the bot: `.venv/bin/python -m bot`
 
 ## License
 

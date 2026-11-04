@@ -6,7 +6,7 @@ from bot.texts import t, variants
 router = Router(name="menu")
 
 # Sections that are not built yet
-COMING_SOON = variants("menu.products") | variants("menu.cart") | variants("menu.orders")
+COMING_SOON = variants("menu.cart") | variants("menu.orders")
 
 
 @router.message(F.text.in_(COMING_SOON))

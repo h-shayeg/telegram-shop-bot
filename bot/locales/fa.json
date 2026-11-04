@@ -9,5 +9,16 @@
   "language.changed": "زبان به فارسی تغییر کرد.",
   "common.coming_soon": "این بخش به‌زودی اضافه می‌شود.",
   "commands.start": "شروع و منوی اصلی",
-  "commands.language": "تغییر زبان"
+  "commands.language": "تغییر زبان",
+  "catalog.choose_category": "یک دسته‌بندی انتخاب کنید:",
+  "catalog.empty": "هنوز محصولی ثبت نشده است.",
+  "catalog.choose_product": "{category}\nیک محصول انتخاب کنید:",
+  "catalog.empty_category": "این دسته‌بندی فعلاً محصولی ندارد.",
+  "catalog.not_found": "این محصول دیگر در دسترس نیست.",
+  "catalog.price": "💰 قیمت: {price}",
+  "catalog.in_stock": "✅ موجود",
+  "catalog.out_of_stock": "❌ ناموجود",
+  "price.format": "{amount} تومان",
+  "button.back": "🔙 بازگشت",
+  "button.add_to_cart": "➕ افزودن به سبد خرید"
 }
